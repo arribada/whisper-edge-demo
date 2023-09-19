@@ -37,17 +37,38 @@ Workaround:
 
 ### Setup
 
+#### USB Serial
+
+Attach the Jetson Nano to your computer via USB and get a shell, e.g. with [screen](https://www.gnu.org/software/screen/) on Linux:
+
+```bash
+screen /dev/ttyUSB0 115200
+```
+
+Or with [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) on Windows.
+
+You'll be prompted to log in with the default credentials:
+
+```bash
+login: alex
+password: arribada
+```
+
+#### SSH
+
 First, follow the [developer kit setup instructions](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit), connect the Wi-Fi adapter and the microphone to USB, and ideally [install a fan](https://noctua.at/en/nf-a4x10-flx/service). (Also plugging in an Ethernet cable helps to make the downloads faster.) Then, get a shell on the Jetson Nano:
 
 ```bash
-ssh user@jetson-nano.local
+ssh alex@jetson-nano.local
 ```
+
+### Build
 
 We will use [NVIDIA Docker containers](https://hub.docker.com/r/dustynv/jetson-inference/tags) to run inference. Get the source code and build the custom container:
 
 ```bash
-git clone https://github.com/maxbbraun/whisper-edge.git
-bash whisper-edge/build.sh
+git clone https://github.com/arribada/whisper-edge-demo.git whisper-edge-arribada
+bash whisper-edge-arribada/build.sh
 ```
 
 ### Run
@@ -55,7 +76,7 @@ bash whisper-edge/build.sh
 Launch inference:
 
 ```bash
-bash whisper-edge/run.sh
+bash whisper-edge-arribada/run.sh
 ```
 
 You should see console output similar to this:
@@ -71,10 +92,10 @@ I0317 00:44:31.353919 547488051216 stream.py:51] benefits all of humanity.
 I0317 00:44:49.219501 547488051216 stream.py:51]
 ```
 
-The [`stream.py` script](stream.py) run in the container accepts flags for different configurations:
+The [`stream.py` script](stream.py) run in the container accepts flags for different configurations (the default flags should work for the demo):
 
 ```bash
-bash whisper-edge/run.sh --help
+bash whisper-edge-arribada/run.sh --help
 
        USAGE: stream.py [flags]
 flags:
@@ -123,9 +144,3 @@ alsamixer
 # Does a test recording work?
 arecord --format=S16_LE --duration=5 --rate=16000 --channels=1 --device=plughw:2,0 test.wav
 ```
-
-## Coral Edge TPU
-
-![Coral](media/coral.jpg)
-
-See the corresponding [issue](https://github.com/maxbbraun/whisper-edge/issues/1) about what supporting the [Google Coral Edge TPU](https://coral.ai/products/) may look like.
