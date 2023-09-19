@@ -64,6 +64,9 @@ ssh alex@jetson-nano.local
 
 ### Build
 
+For the demo, the **container should already be built**.
+You can skip this step and proceed to [Run](#run).
+
 We will use [NVIDIA Docker containers](https://hub.docker.com/r/dustynv/jetson-inference/tags) to run inference. Get the source code and build the custom container:
 
 ```bash
@@ -87,10 +90,20 @@ I0317 00:42:23.979984 547488051216 stream.py:75] Loading model "base.en"...
 I0317 00:43:14.232425 547488051216 stream.py:79] Warming model up...
 I0317 00:43:55.164070 547488051216 stream.py:86] Starting stream...
 I0317 00:44:19.775566 547488051216 stream.py:51]
-I0317 00:44:22.046195 547488051216 stream.py:51] Open AI's mission is to ensure that artificial general intelligence
-I0317 00:44:31.353919 547488051216 stream.py:51] benefits all of humanity.
-I0317 00:44:49.219501 547488051216 stream.py:51]
+I0317 00:44:22.046195 547488051216 stream.py:51] 
+I0317 00:44:49.219501 547488051216 stream.py:51] Start speaking now to see the transcription!
 ```
+
+Below is a script for demoing the transcription in real-time:
+
+```
+As the sun set, I couldn't help but admire the dolphins jumping out of the water, with seagulls flying overhead. 
+It's a beautiful scene, but there's a problem on my mind: bycatch. 
+You see, I'm a fisherman, and my family depends on our daily catch. 
+But sometimes, our nets unintentionally trap dolphins, whales, and other creatures, instead of the sharks and seals we're targeting.
+```
+
+This script will highlight the keywords programmed into this demo in green.
 
 The [`stream.py` script](stream.py) run in the container accepts flags for different configurations (the default flags should work for the demo):
 
